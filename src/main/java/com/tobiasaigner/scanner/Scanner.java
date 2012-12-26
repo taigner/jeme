@@ -1,5 +1,6 @@
 package com.tobiasaigner.scanner;
 
+import org.apache.commons.lang.CharUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 
@@ -35,6 +36,7 @@ public class Scanner {
 
         if (position < input.length()) {
             skipBlanks();
+            skipComments();
 
             if (input.charAt(position) == '(') {
                 token = new Token<String>(Token.TokenType.LEFT_PARENTHESES, "(");
@@ -98,5 +100,13 @@ public class Scanner {
     private void skipBlanks() {
         while (StringUtils.isBlank(String.valueOf(input.charAt(position))))
             position++;
+    }
+
+    private void skipComments() {
+        if (input.charAt(position) == ';') {
+            while (input.charAt(position) != CharUtils.CR && input.charAt(position) != CharUtils.LF)
+                position++;
+            skipBlanks();
+        }
     }
 }

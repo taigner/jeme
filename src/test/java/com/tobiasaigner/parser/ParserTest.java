@@ -61,6 +61,14 @@ public class ParserTest {
     }
 
     @Test
+    public void parseSquareProcedureWithComment() throws Exception {
+        String input = "; comment\n (define (square x) (* x x))";
+
+        AST result = parser.parse(input);
+        assertTrue(result.expressionAt(0) instanceof Definition);
+    }
+
+    @Test
     public void parseCond() throws Exception {
         String input = "(define (test x) (cond ((= x 1) (* x x)) (else (+ x x))))";
 
