@@ -1,8 +1,8 @@
 package com.tobiasaigner;
 
 import com.tobiasaigner.ast.Primitives;
+import com.tobiasaigner.ast.visitor.InterpretingVisitor;
 import com.tobiasaigner.ast.visitor.PrintVisitor;
-import com.tobiasaigner.ast.visitor.Visitor;
 import com.tobiasaigner.environment.Environment;
 import com.tobiasaigner.environment.Scope;
 import com.tobiasaigner.parser.Parser;
@@ -27,7 +27,7 @@ public class Jeme {
         Environment env = new Environment(new Scope("global"));
         env.addPrimitives(new Primitives());
         Parser parser = new Parser(new com.tobiasaigner.scanner.Scanner());
-        new PrintVisitor(env).visit(parser.parse(program));
+        new InterpretingVisitor(env).visit(parser.parse(program));
     }
 
     private static String readContentFrom(String filename) throws FileNotFoundException {
