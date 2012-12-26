@@ -27,7 +27,7 @@ public class Jeme {
         Environment env = new Environment(new Scope("global"));
         env.addPrimitives(new Primitives());
         Parser parser = new Parser(new com.tobiasaigner.scanner.Scanner());
-        new InterpretingVisitor(env).visit(parser.parse(program));
+        System.out.println(new InterpretingVisitor(env).visit(parser.parse(program)));
     }
 
     private static String readContentFrom(String filename) throws FileNotFoundException {
