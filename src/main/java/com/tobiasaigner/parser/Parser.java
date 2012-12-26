@@ -126,17 +126,20 @@ public class Parser {
             token = scanner.next();
 
             if (ELSE.equals(token.value())) {
-                token = scanner.next();
-                cond.setElseClause(parseSexp());
+                List<Expression> expressions = new ArrayList<Expression>();
+                while (!Token.TokenType.RIGHT_PARENTHESES.equals((token = scanner.next()).type()))
+                    expressions.add(parseSexp());
+
+                cond.setElseClause(expressions);
             } else {
                 Expression clause = parseSexp();
 
-                token = scanner.next();
+                List<Expression> expressions = new ArrayList<Expression>();
+                while (!Token.TokenType.RIGHT_PARENTHESES.equals((token = scanner.next()).type()))
+                    expressions.add(parseSexp());
 
-                cond.addClause(clause, parseSexp());
+                cond.addClause(clause, expressions);
             }
-            if (!Token.TokenType.RIGHT_PARENTHESES.equals((token = scanner.next()).type()))
-                throw new ParserException(") expected");
         }
 
         if (!Token.TokenType.RIGHT_PARENTHESES.equals(token.type()))

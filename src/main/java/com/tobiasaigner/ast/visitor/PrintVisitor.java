@@ -104,15 +104,15 @@ public class PrintVisitor implements Visitor {
 
     @Override
     public Object visit(Cond cond) {
-        Map<Expression, Expression> clauses = cond.clauses();
+        Map<Expression, List<Expression>> clauses = cond.clauses();
         for (Expression clause : clauses.keySet()) {
             Bool result = (Bool) clause.accept(this);
 
             if (result.value())
-                return clauses.get(clause).accept(this);
+                return evaluateExpressionsAndReturnLastOne(clauses.get(clause));
         }
 
-        return cond.elseClause().accept(this);
+        return evaluateExpressionsAndReturnLastOne(cond.elseClause());
     }
 
     @Override
@@ -332,12 +332,14 @@ public class PrintVisitor implements Visitor {
     }
 
     private Object evaluateProcedureBody(Lambda procedure) {
+        return evaluateExpressionsAndReturnLastOne(procedure.body());
+    }
+
+    private Object evaluateExpressionsAndReturnLastOne(List<Expression> expressions) {
         Object result = null;
 
-        // evaluate all expressions and return the last one
-        for (Expression expr : procedure.body()) {
+        for (Expression expr : expressions)
             result = expr.accept(this);
-        }
 
         return result;
     }

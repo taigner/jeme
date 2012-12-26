@@ -11,18 +11,18 @@ import java.util.Map;
  * @author Tobias Aigner
  */
 public class Cond extends Expression {
-    private Map<Expression, Expression> clauses = new HashMap<Expression, Expression>();
-    private Expression elseClause;
+    private Map<Expression, List<Expression>> clauses = new HashMap<Expression, List<Expression>>();
+    private List<Expression> elseClause;
 
-    public Map<Expression, Expression> clauses() {
+    public Map<Expression, List<Expression>> clauses() {
         return clauses;
     }
 
-    public Expression elseClause() {
+    public List<Expression> elseClause() {
         return elseClause;
     }
 
-    public void setElseClause(Expression elseClause) {
+    public void setElseClause(List<Expression> elseClause) {
         this.elseClause = elseClause;
     }
 
@@ -31,7 +31,7 @@ public class Cond extends Expression {
         return v.visit(this);
     }
 
-    public void addClause(Expression clause, Expression body) {
+    public void addClause(Expression clause, List<Expression> body) {
         clauses.put(clause, body);
     }
 }
