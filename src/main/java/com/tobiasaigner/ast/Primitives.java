@@ -31,6 +31,7 @@ public class Primitives {
         primitives.put("<=", new LTE());
         primitives.put(">=", new GTE());
         primitives.put("=", new Equals());
+        primitives.put("println", new Println());
     }
 
     public Map<String, Expression> allDefinitions() {
@@ -359,6 +360,23 @@ public class Primitives {
         @Override
         public int maxNumberOfArguments() {
             return 2;
+        }
+
+        @Override
+        public Object accept(Visitor v) {
+            return v.visit(this);
+        }
+    }
+
+    public static class Println extends PrimitiveProcedure {
+        @Override
+        public int minNumberOfArguments() {
+            return 0;
+        }
+
+        @Override
+        public int maxNumberOfArguments() {
+            return Integer.MAX_VALUE;
         }
 
         @Override

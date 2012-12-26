@@ -32,4 +32,6 @@ public interface Visitor {
 
     Object visit(Primitives.IsNumber o);
     Object visit(Primitives.IsString o);
+
+    Object visit(Primitives.Println p);
 }

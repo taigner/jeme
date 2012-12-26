@@ -277,6 +277,20 @@ public class PrintVisitor implements Visitor {
         return new Bool(first.equals(second));
     }
 
+    @Override
+    public Object visit(Primitives.Println p) {
+        StringBuilder builder = new StringBuilder();
+
+        for (Expression argument : p.allArguments()) {
+            builder.append(argument.accept(this));
+            builder.append(" ");
+        }
+
+        System.out.println(builder.toString());
+
+        return null;
+    }
+
     private Object evaluateProcedureCall(ProcedureCall call, Lambda procedure) {
         List<Expression> arguments = evaluateProcedureArguments(call);
 
