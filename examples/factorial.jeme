@@ -1,0 +1,16 @@
+; recursive computation of factorials
+(define (factorial n)
+  (cond ((= n 1) 1)
+        (else (* n (factorial (- n 1))))))
+
+(println "Factorial recursive:" (factorial 5))
+
+; iterative computation of factorial
+(define (factorial-iter n)
+  (fact-iter 1 1 n))
+
+(define (fact-iter product counter max-count)
+  (cond ((> counter max-count) product)
+      (else (fact-iter (* counter product) (+ counter 1) max-count))))
+
+(println "Factorial iterative:" (factorial-iter 5))
