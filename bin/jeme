@@ -1,2 +1,2 @@
 #!/bin/bash
-java -jar bin/jeme.jar
+java -jar bin/jeme.jar $@ 
